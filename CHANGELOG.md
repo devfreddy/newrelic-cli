@@ -1,3 +1,15 @@
+<a name="v0.19.1"></a>
+## [v0.19.1] - 2021-03-05
+### Bug Fixes
+- Replace Detected observability gaps by Data Gaps
+
+<a name="v0.19.0"></a>
+## [v0.19.0] - 2021-03-02
+### Bug Fixes
+- **install:** allow skipDiscovery and skipLoggingInstall flags to work together
+
+<a name="v0.18.32"></a>
+## [v0.18.32] - 2021-02-25
 <a name="v0.18.31"></a>
 ## [v0.18.31] - 2021-02-25
 <a name="v0.18.30"></a>
@@ -500,7 +512,10 @@
 - **profile:** Enable reading of profiles and use Region/APIKey from default profile
 - **profile:** Add listing of profiles to command
 
-[Unreleased]: https://github.com/newrelic/newrelic-client-go/compare/v0.18.31...HEAD
+[Unreleased]: https://github.com/newrelic/newrelic-client-go/compare/v0.19.1...HEAD
+[v0.19.1]: https://github.com/newrelic/newrelic-client-go/compare/v0.19.0...v0.19.1
+[v0.19.0]: https://github.com/newrelic/newrelic-client-go/compare/v0.18.32...v0.19.0
+[v0.18.32]: https://github.com/newrelic/newrelic-client-go/compare/v0.18.31...v0.18.32
 [v0.18.31]: https://github.com/newrelic/newrelic-client-go/compare/v0.18.30...v0.18.31
 [v0.18.30]: https://github.com/newrelic/newrelic-client-go/compare/v0.18.29...v0.18.30
 [v0.18.29]: https://github.com/newrelic/newrelic-client-go/compare/v0.18.28...v0.18.29

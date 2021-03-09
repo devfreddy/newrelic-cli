@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"testing"
 
+	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -92,6 +93,26 @@ func TestInstall_Basic(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, f.FetchRecipeNameCount[infraAgentRecipeName], 1)
 	require.Equal(t, f.FetchRecipeNameCount[loggingRecipeName], 1)
+}
+
+func TestInstall_DiscoveryComplete(t *testing.T) {
+	ic := InstallerContext{}
+	statusReporter := execution.NewMockStatusReporter()
+	statusReporters = []execution.StatusSubscriber{statusReporter}
+	status = execution.NewInstallStatus(statusReporters)
+	f.FetchRecipeVals = []types.Recipe{
+		{
+			Name:           infraAgentRecipeName,
+			DisplayName:    infraAgentRecipeName,
+			ValidationNRQL: "testNrql",
+		},
+	}
+
+	i := RecipeInstaller{ic, d, l, f, e, v, ff, status, p, pi}
+
+	err := i.Install()
+	require.NoError(t, err)
+	require.Equal(t, 1, statusReporter.DiscoveryCompleteCallCount)
 }
 
 func TestInstall_RecipesAvailable(t *testing.T) {
@@ -466,6 +487,35 @@ func TestInstall_RecipeSkipped_AssumeYes(t *testing.T) {
 	require.Equal(t, 0, statusReporters[0].(*execution.MockStatusReporter).RecipeSkippedCallCount)
 	require.Equal(t, 3, statusReporters[0].(*execution.MockStatusReporter).RecipeInstallingCallCount)
 	require.Equal(t, 3, statusReporters[0].(*execution.MockStatusReporter).RecipeInstalledCallCount)
+}
+
+func TestInstall_TargetedInstall_InstallsInfraAgent(t *testing.T) {
+	log.SetLevel(log.TraceLevel)
+	ic := InstallerContext{
+		RecipeNames: []string{"testRecipe"},
+	}
+	statusReporters = []execution.StatusSubscriber{execution.NewMockStatusReporter()}
+	status = execution.NewInstallStatus(statusReporters)
+	f = recipes.NewMockRecipeFetcher()
+	f.FetchRecommendationsVal = []types.Recipe{}
+	f.FetchRecipeVals = []types.Recipe{
+		{
+			Name:           "testRecipe",
+			ValidationNRQL: "testNrql",
+		},
+		{
+			Name:           infraAgentRecipeName,
+			ValidationNRQL: "testNrql",
+		},
+	}
+
+	v = validation.NewMockRecipeValidator()
+
+	i := RecipeInstaller{ic, d, l, f, e, v, ff, status, p, pi}
+	err := i.Install()
+	require.NoError(t, err)
+	require.Equal(t, 2, statusReporters[0].(*execution.MockStatusReporter).RecipeInstalledCallCount)
+	require.Equal(t, 1, statusReporters[0].(*execution.MockStatusReporter).InstallCompleteCallCount)
 }
 
 func fetchRecipeFileFunc(recipeURL *url.URL) (*recipes.RecipeFile, error) {
