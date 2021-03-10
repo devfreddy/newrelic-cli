@@ -6,6 +6,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	"github.com/newrelic/newrelic-cli/internal/install/types"
 )
 
 var (
@@ -41,6 +43,10 @@ var TestCommand = &cobra.Command{
 		}
 
 		if err := i.Install(); err != nil {
+			if err == types.ErrInterrupt {
+				return
+			}
+
 			log.Fatalf("test failed: %s", err)
 		}
 	},
