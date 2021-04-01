@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-task/task/v3"
 	taskargs "github.com/go-task/task/v3/args"
@@ -123,8 +124,16 @@ func (re *GoTaskRecipeExecutor) Execute(ctx context.Context, m types.DiscoveryMa
 	for k, val := range recipeVars {
 		e.Taskfile.Vars.Set(k, taskfile.Var{Static: val})
 	}
+	log.Print("\n\n **************************** \n")
+	log.Printf("\n Run - ctx:    %+v \n", ctx)
+	log.Printf("\n Run - calls:  %+v \n", calls)
+	time.Sleep(2 * time.Second)
 
 	if err := e.Run(ctx, calls...); err != nil {
+		log.Printf("\n Run - err:  %+v \n", err)
+		log.Print("\n **************************** \n\n")
+		time.Sleep(2 * time.Second)
+
 		// go-task does not provide an error type to denote context cancelation
 		// Therefore we need to match inside the error message
 		if strings.Contains(err.Error(), "context canceled") {
