@@ -1,5 +1,5 @@
-<a name="v0.20.8"></a>
-## [v0.20.8] - 2021-04-01
+<a name="v0.20.28"></a>
+## [v0.20.28] - 2021-04-01
 <a name="v0.20.7"></a>
 ## [v0.20.7] - 2021-03-31
 ### Bug Fixes
@@ -136,7 +136,7 @@
 <a name="v0.18.19"></a>
 ## [v0.18.19] - 2021-01-27
 ### Bug Fixes
-- **install:** ensure prompt respones are handled correctly
+- **install:** ensure prompt response are handled correctly
 
 <a name="v0.18.18"></a>
 ## [v0.18.18] - 2021-01-25
@@ -572,8 +572,8 @@
 - **profile:** Enable reading of profiles and use Region/APIKey from default profile
 - **profile:** Add listing of profiles to command
 
-[Unreleased]: https://github.com/newrelic/newrelic-client-go/compare/v0.20.8...HEAD
-[v0.20.8]: https://github.com/newrelic/newrelic-client-go/compare/v0.20.7...v0.20.8
+[Unreleased]: https://github.com/newrelic/newrelic-client-go/compare/v0.20.28...HEAD
+[v0.20.28]: https://github.com/newrelic/newrelic-client-go/compare/v0.20.7...v0.20.28
 [v0.20.7]: https://github.com/newrelic/newrelic-client-go/compare/v0.20.6...v0.20.7
 [v0.20.6]: https://github.com/newrelic/newrelic-client-go/compare/v0.20.5...v0.20.6
 [v0.20.5]: https://github.com/newrelic/newrelic-client-go/compare/v0.20.4...v0.20.5
